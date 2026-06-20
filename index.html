@@ -201,11 +201,11 @@
     <footer>© 2026 Agenticheck. All rights reserved. | Securing Infrastructure Boundaries.</footer>
 
     <script>
-        // --- Diagnostic Engine Logic ---
-        document.getElementById('auditForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop page reload
+// --- Diagnostic Engine Logic (Live API Connection) ---
+        document.getElementById('auditForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); 
             
-            const text = document.getElementById('systemData').value.toLowerCase();
+            const textPayload = document.getElementById('systemData').value;
             const company = document.getElementById('comp').value;
             const email = document.getElementById('email').value;
             const reportBox = document.getElementById('diagnosticReport');
@@ -213,133 +213,53 @@
             const contactLink = document.getElementById('contactLink');
             
             reportBox.style.display = 'block';
-            reportContent.innerHTML = 'Analyzing state configuration vectors...<br><br>';
+            reportContent.innerHTML = 'Transmitting data to backend UIP Engine for processing...<br><br>';
+            contactLink.style.display = 'none';
             
-            let issues = [];
-            let isCritical = false;
+            try {
+                // Send the text payload to your local Python server
+                const response = await fetch('http://127.0.0.1:5000/api/audit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ payload: textPayload })
+                });
 
-            // Check 1: Budget & Loop Constraints (Entropy Simulation)
-            if (text.includes('unlimited') || text.includes('budget_alerts=false') || text.includes('null') || !text.includes('max_')) {
-                isCritical = true;
-                issues.push("<span class='alert-critical'>[!] High-Entropy Execution Detected:</span> Missing budget constraints or unlimited looping parameters. System is vulnerable to algorithmic resource exhaustion.");
-            }
+                if (!response.ok) {
+                    throw new Error(`Server Error: ${response.status}`);
+                }
 
-            // Check 2: Access & Credentials (Signal-to-Noise Simulation)
-            if (text.includes('access-control-allow-origin: *') || text.includes('sk-') || text.includes('allowall')) {
-                isCritical = true;
-                issues.push("<span class='alert-critical'>[!] Critical Coherence Drop:</span> Unrestricted CORS policies or exposed authorization keys found. High risk of external logic hijacking.");
-            }
+                const result = await response.json();
+                
+                // Parse the genuine mathematical output
+                const snrDrop = result.telemetry.snr_drop_db;
+                const sleScore = result.telemetry.sle_score;
+                const status = result.status;
 
-            setTimeout(() => {
-                if (isCritical) {
-                    reportContent.innerHTML += `<span class="alert-critical">[!!!] SECURITY ALERT: STATE CRITICALITY DETECTED.</span><br><br>` +
-                                               issues.join('<br><br>') +
-                                               `<br><br><strong>Status 77: Continuous Monitoring Required.</strong>`;
+                let outputHTML = `[UIP Telemetry] Calculated SNR Drop: ${snrDrop} dB<br>`;
+                outputHTML += `[UIP Telemetry] Calculated Single-Sample Landscape Entropy (SLE): ${sleScore}<br><br>`;
+
+                if (status === "CRITICAL") {
+                    outputHTML += `<span class="alert-critical">[!!!] SECURITY ALERT: STATE CRITICALITY DETECTED.</span><br>`;
+                    outputHTML += `<span class="alert-critical">Reason: Logical thresholds breached. Restoration required.</span><br><br>`;
+                    outputHTML += `<strong>Status 77: Continuous Monitoring Required.</strong>`;
                     
-                    // Generate dynamic mailto link with the scan findings
                     const subject = encodeURIComponent(`Agenticheck Remediation Request: ${company}`);
-                    const body = encodeURIComponent(`Client: ${company}\nEmail: ${email}\n\nDiagnostic Output:\nCritical vulnerabilities found in configuration data requiring immediate review.\n\nRaw Input Log:\n${text}`);
+                    const body = encodeURIComponent(`Client: ${company}\nEmail: ${email}\n\nDiagnostic Output:\nCritical vulnerabilities found.\nSNR Drop: ${snrDrop} dB\nSLE Score: ${sleScore}`);
                     contactLink.href = `mailto:brandon@agenticheck.com?subject=${subject}&body=${body}`;
                     contactLink.style.display = 'inline-block';
                 } else {
-                    reportContent.innerHTML += `<span class="alert-safe">[-] System State: Normal/Coherent. Execution authorized.</span><br><br>No exposed logic overrides or unbound loops detected in current sample.`;
-                    contactLink.style.display = 'none';
+                    outputHTML += `<span class="alert-safe">[-] System State: Normal/Coherent. Execution authorized.</span><br><br>`;
+                    outputHTML += `Baseline parameters hold. No vulnerability detected in current configuration string.`;
                 }
-            }, 800); // Slight delay for analytical effect
-        });
 
-        // --- Interactive Mesh Canvas Logic ---
-        const canvas = document.getElementById('fieldCanvas');
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+                reportContent.innerHTML = outputHTML;
 
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            initMesh();
-        });
-
-        const mouse = { x: null, y: null, targetX: null, targetY: null };
-        canvas.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.targetX = e.clientX - rect.left;
-            mouse.targetY = e.clientY - rect.top;
-        });
-        canvas.addEventListener('mouseleave', () => { mouse.targetX = null; mouse.targetY = null; });
-
-        let points = [];
-        const sphereRadius = 140;
-        const rows = 14; const cols = 26;
-
-        function initMesh() {
-            points = [];
-            for (let i = 0; i < rows; i++) {
-                let theta = (i / (rows - 1)) * Math.PI;
-                for (let j = 0; j < cols; j++) {
-                    let phi = (j / cols) * 2 * Math.PI;
-                    let x = sphereRadius * Math.sin(theta) * Math.cos(phi);
-                    let y = sphereRadius * Math.sin(theta) * Math.sin(phi);
-                    let z = sphereRadius * Math.cos(theta);
-                    points.push({ baseX: x, baseY: y, baseZ: z, x: x, y: y, z: z, px: 0, py: 0 });
-                }
+            } catch (error) {
+                reportContent.innerHTML = `<span class="alert-critical">Connection Failure: Could not reach the backend server. Ensure app.py is running on port 5000.</span><br><br>Error Detail: ${error.message}`;
             }
-        }
-
-        let angleX = 0.003; let angleY = 0.005;
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            if (mouse.targetX !== null) {
-                if (mouse.x === null) { mouse.x = mouse.targetX; mouse.y = mouse.targetY; }
-                mouse.x += (mouse.targetX - mouse.x) * 0.1;
-                mouse.y += (mouse.targetY - mouse.y) * 0.1;
-            } else { mouse.x = null; mouse.y = null; }
-
-            const centerX = width / 2; const centerY = height / 2;
-            const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
-            const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
-
-            points.forEach(p => {
-                let x1 = p.baseX * cosY - p.baseZ * sinY;
-                let z1 = p.baseX * sinY + p.baseZ * cosY;
-                let y2 = p.baseY * cosX - z1 * sinX;
-                let z2 = p.baseY * sinX + z1 * cosX;
-                p.baseX = x1; p.baseY = y2; p.baseZ = z2;
-                let screenX = p.baseX + centerX; let screenY = p.baseY + centerY;
-
-                if (mouse.x !== null) {
-                    let dx = screenX - mouse.x; let dy = screenY - mouse.y;
-                    let dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 220) {
-                        let push = ((220 - dist) / 220) * 45; 
-                        screenX += (dx / dist) * push; screenY += (dy / dist) * push;
-                    }
-                }
-                p.px = screenX; p.py = screenY;
-            });
-
-            ctx.lineWidth = 0.75;
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    let idx1 = i * cols + j;
-                    let idx2 = i * cols + ((j + 1) % cols);
-                    let idx3 = ((i + 1) % rows) * cols + j;
-                    let p1 = points[idx1]; let p2 = points[idx2]; let p3 = points[idx3];
-
-                    let distToMouse = 999;
-                    if (mouse.x !== null) { distToMouse = Math.sqrt(Math.pow(p1.px - mouse.x, 2) + Math.pow(p1.py - mouse.y, 2)); }
-
-                    if (p1.baseZ > -40) {
-                        ctx.strokeStyle = distToMouse < 140 ? 'rgba(121, 192, 255, 0.45)' : 'rgba(56, 139, 253, 0.2)';
-                        ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
-                        if (i < rows - 1) { ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p3.px, p3.py); ctx.stroke(); }
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        initMesh(); animate();
+        });
     </script>
 </body>
 </html>
