@@ -12,6 +12,8 @@
             --bg-dark: #0d1117;
             --card-surface: rgba(22, 27, 34, 0.85);
             --border-muted: rgba(48, 54, 61, 0.8);
+            --alert-red: #f85149;
+            --alert-green: #2ea043;
         }
 
         body {
@@ -24,11 +26,10 @@
             line-height: 1.6;
         }
 
-        /* Hero Animation Container */
         .hero-container {
             position: relative;
             width: 100%;
-            height: 65vh;
+            height: 55vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -70,12 +71,10 @@
             color: #8b949e;
             margin: 0;
             font-weight: 400;
-            text-shadow: 0 0 10px rgba(13, 17, 23, 0.8);
         }
 
-        /* Main Operations Area */
         .main-content {
-            max-width: 800px;
+            max-width: 850px;
             margin: -4rem auto 4rem auto;
             position: relative;
             z-index: 3;
@@ -88,30 +87,13 @@
             border-radius: 12px;
             padding: 2.5rem;
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
-        h2 {
-            font-size: 1.5rem;
-            color: #fff;
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-        }
+        h2 { font-size: 1.5rem; color: #fff; margin-top: 0; margin-bottom: 0.5rem; }
+        p.instructions { color: #8b949e; font-size: 0.95rem; margin-bottom: 2rem; }
 
-        p.instructions {
-            color: #8b949e;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #fff;
-            font-size: 0.9rem;
-        }
+        label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #fff; font-size: 0.9rem; }
 
         textarea {
             width: 100%;
@@ -128,63 +110,51 @@
             margin-bottom: 1.5rem;
         }
 
-        textarea:focus {
-            outline: none;
-            border-color: var(--accent-glow);
-            box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.25);
-        }
+        textarea:focus { outline: none; border-color: var(--accent-glow); box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.25); }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 600px) {
-            .form-row { grid-template-columns: 1fr; gap: 1rem; }
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; gap: 1rem; } }
 
         input[type="text"], input[type="email"] {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #070a0e;
-            border: 1px solid var(--border-muted);
-            border-radius: 6px;
-            color: #fff;
-            font-size: 0.95rem;
-            box-sizing: border-box;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--accent-glow);
+            width: 100%; padding: 0.75rem; background-color: #070a0e; border: 1px solid var(--border-muted);
+            border-radius: 6px; color: #fff; box-sizing: border-box;
         }
 
         .scan-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #1f6feb 0%, #388bfd 100%);
-            color: #fff;
-            padding: 1rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(31, 111, 235, 0.3);
-            transition: filter 0.2s, transform 0.1s;
+            width: 100%; background: linear-gradient(135deg, #1f6feb 0%, #388bfd 100%);
+            color: #fff; padding: 1rem; font-size: 1.1rem; font-weight: 600; border: none;
+            border-radius: 6px; cursor: pointer; transition: filter 0.2s;
         }
-
         .scan-btn:hover { filter: brightness(1.1); }
-        .scan-btn:active { transform: scale(0.99); }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.85rem;
-            color: #8b949e;
-            border-top: 1px solid rgba(48, 54, 61, 0.3);
+        /* Diagnostic Results Output Area */
+        #diagnosticReport {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #010409;
+            border: 1px solid var(--border-muted);
+            border-radius: 6px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9rem;
         }
+        .report-header { font-weight: 700; margin-bottom: 1rem; border-bottom: 1px solid var(--border-muted); padding-bottom: 0.5rem;}
+        .alert-critical { color: var(--alert-red); }
+        .alert-safe { color: var(--alert-green); }
+        
+        .action-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            background: #238636;
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .action-btn:hover { background: #2ea043; }
+
+        footer { text-align: center; padding: 2rem; font-size: 0.85rem; color: #8b949e; border-top: 1px solid rgba(48, 54, 61, 0.3); }
     </style>
 </head>
 <body>
@@ -202,34 +172,85 @@
             <h2>Diagnostic System Audit</h2>
             <p class="instructions">Paste environment logs, prompt routing rules, configuration profiles, or budget parameters to test for looping limits and systemic logic exploits.</p>
             
-            <form action="mailto:brandon@agenticheck.com" method="post" enctype="text/plain">
+            <form id="auditForm">
                 <label for="systemData">Target Text/Configuration Dump</label>
-                <textarea id="systemData" name="System Configuration/Logs" placeholder="Paste runtime files here (e.g., system prompts, deployment YAML configs, or runtime infrastructure loops...)" required></textarea>
+                <textarea id="systemData" required placeholder="Paste runtime files here (e.g., HTTP routing headers, API limits, deployment configs...)"></textarea>
 
                 <div class="form-row">
                     <div>
                         <label for="comp">Company Name</label>
-                        <input type="text" id="comp" name="Company" placeholder="e.g., Enterprise Core Engineering" required>
+                        <input type="text" id="comp" required placeholder="e.g., Enterprise Core Engineering">
                     </div>
                     <div>
                         <label for="email">Corporate Email Address</label>
-                        <input type="email" id="email" name="Email" placeholder="admin@company.com" required>
+                        <input type="email" id="email" required placeholder="admin@company.com">
                     </div>
                 </div>
 
                 <button type="submit" class="scan-btn">Initialize Vulnerability Verification</button>
             </form>
+
+            <div id="diagnosticReport">
+                <div class="report-header">UIP TELEMETRY OUTPUT</div>
+                <div id="reportContent"></div>
+                <a href="#" id="contactLink" class="action-btn" style="display: none;">Submit to Engineering for Remediation</a>
+            </div>
         </div>
     </div>
 
-    <footer>
-        © 2026 Agenticheck. All rights reserved. | Securing Infrastructure Boundaries.
-    </footer>
+    <footer>© 2026 Agenticheck. All rights reserved. | Securing Infrastructure Boundaries.</footer>
 
     <script>
+        // --- Diagnostic Engine Logic ---
+        document.getElementById('auditForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop page reload
+            
+            const text = document.getElementById('systemData').value.toLowerCase();
+            const company = document.getElementById('comp').value;
+            const email = document.getElementById('email').value;
+            const reportBox = document.getElementById('diagnosticReport');
+            const reportContent = document.getElementById('reportContent');
+            const contactLink = document.getElementById('contactLink');
+            
+            reportBox.style.display = 'block';
+            reportContent.innerHTML = 'Analyzing state configuration vectors...<br><br>';
+            
+            let issues = [];
+            let isCritical = false;
+
+            // Check 1: Budget & Loop Constraints (Entropy Simulation)
+            if (text.includes('unlimited') || text.includes('budget_alerts=false') || text.includes('null') || !text.includes('max_')) {
+                isCritical = true;
+                issues.push("<span class='alert-critical'>[!] High-Entropy Execution Detected:</span> Missing budget constraints or unlimited looping parameters. System is vulnerable to algorithmic resource exhaustion.");
+            }
+
+            // Check 2: Access & Credentials (Signal-to-Noise Simulation)
+            if (text.includes('access-control-allow-origin: *') || text.includes('sk-') || text.includes('allowall')) {
+                isCritical = true;
+                issues.push("<span class='alert-critical'>[!] Critical Coherence Drop:</span> Unrestricted CORS policies or exposed authorization keys found. High risk of external logic hijacking.");
+            }
+
+            setTimeout(() => {
+                if (isCritical) {
+                    reportContent.innerHTML += `<span class="alert-critical">[!!!] SECURITY ALERT: STATE CRITICALITY DETECTED.</span><br><br>` +
+                                               issues.join('<br><br>') +
+                                               `<br><br><strong>Status 77: Continuous Monitoring Required.</strong>`;
+                    
+                    // Generate dynamic mailto link with the scan findings
+                    const subject = encodeURIComponent(`Agenticheck Remediation Request: ${company}`);
+                    const body = encodeURIComponent(`Client: ${company}\nEmail: ${email}\n\nDiagnostic Output:\nCritical vulnerabilities found in configuration data requiring immediate review.\n\nRaw Input Log:\n${text}`);
+                    contactLink.href = `mailto:brandon@agenticheck.com?subject=${subject}&body=${body}`;
+                    contactLink.style.display = 'inline-block';
+                } else {
+                    reportContent.innerHTML += `<span class="alert-safe">[-] System State: Normal/Coherent. Execution authorized.</span><br><br>No exposed logic overrides or unbound loops detected in current sample.`;
+                    contactLink.style.display = 'none';
+                }
+            }, 800); // Slight delay for analytical effect
+        });
+
+        // --- Interactive Mesh Canvas Logic ---
         const canvas = document.getElementById('fieldCanvas');
         const ctx = canvas.getContext('2d');
-
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
 
@@ -240,22 +261,16 @@
         });
 
         const mouse = { x: null, y: null, targetX: null, targetY: null };
-        
         canvas.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
             mouse.targetX = e.clientX - rect.left;
             mouse.targetY = e.clientY - rect.top;
         });
-
-        canvas.addEventListener('mouseleave', () => {
-            mouse.targetX = null;
-            mouse.targetY = null;
-        });
+        canvas.addEventListener('mouseleave', () => { mouse.targetX = null; mouse.targetY = null; });
 
         let points = [];
         const sphereRadius = 140;
-        const rows = 14;
-        const cols = 26;
+        const rows = 14; const cols = 26;
 
         function initMesh() {
             points = [];
@@ -263,118 +278,68 @@
                 let theta = (i / (rows - 1)) * Math.PI;
                 for (let j = 0; j < cols; j++) {
                     let phi = (j / cols) * 2 * Math.PI;
-                    
-                    // Generate baseline spherical topology coordinates
                     let x = sphereRadius * Math.sin(theta) * Math.cos(phi);
                     let y = sphereRadius * Math.sin(theta) * Math.sin(phi);
                     let z = sphereRadius * Math.cos(theta);
-
-                    points.push({
-                        baseX: x, baseY: y, baseZ: z,
-                        x: x, y: y, z: z,
-                        px: 0, py: 0
-                    });
+                    points.push({ baseX: x, baseY: y, baseZ: z, x: x, y: y, z: z, px: 0, py: 0 });
                 }
             }
         }
 
-        let angleX = 0.003;
-        let angleY = 0.005;
+        let angleX = 0.003; let angleY = 0.005;
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            
-            // Smoothly ease mouse coordinates
             if (mouse.targetX !== null) {
                 if (mouse.x === null) { mouse.x = mouse.targetX; mouse.y = mouse.targetY; }
                 mouse.x += (mouse.targetX - mouse.x) * 0.1;
                 mouse.y += (mouse.targetY - mouse.y) * 0.1;
-            } else {
-                mouse.x = null; mouse.y = null;
-            }
+            } else { mouse.x = null; mouse.y = null; }
 
-            const centerX = width / 2;
-            const centerY = height / 2;
-
-            // Rotate sphere geometry baseline coordinates
+            const centerX = width / 2; const centerY = height / 2;
             const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
             const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
 
             points.forEach(p => {
-                // Rotate Y
                 let x1 = p.baseX * cosY - p.baseZ * sinY;
                 let z1 = p.baseX * sinY + p.baseZ * cosY;
-                // Rotate X
                 let y2 = p.baseY * cosX - z1 * sinX;
                 let z2 = p.baseY * sinX + z1 * cosX;
-
                 p.baseX = x1; p.baseY = y2; p.baseZ = z2;
+                let screenX = p.baseX + centerX; let screenY = p.baseY + centerY;
 
-                // Absolute screen position calculation
-                let screenX = p.baseX + centerX;
-                let screenY = p.baseY + centerY;
-
-                // Non-Euclidean Elastic force calculation
                 if (mouse.x !== null) {
-                    let dx = screenX - mouse.x;
-                    let dy = screenY - mouse.y;
+                    let dx = screenX - mouse.x; let dy = screenY - mouse.y;
                     let dist = Math.sqrt(dx * dx + dy * dy);
-                    
                     if (dist < 220) {
-                        // Elastic expansion force modifier mimicking pressure deformation
-                        let force = (220 - dist) / 220;
-                        let push = force * 45; 
-                        screenX += (dx / dist) * push;
-                        screenY += (dy / dist) * push;
+                        let push = ((220 - dist) / 220) * 45; 
+                        screenX += (dx / dist) * push; screenY += (dy / dist) * push;
                     }
                 }
-
-                p.px = screenX;
-                p.py = screenY;
+                p.px = screenX; p.py = screenY;
             });
 
-            // Draw structural mesh connections
             ctx.lineWidth = 0.75;
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
                     let idx1 = i * cols + j;
-                    let idx2 = i * cols + ((j + 1) % cols); // Horizontal row connection loop
-                    let idx3 = ((i + 1) % rows) * cols + j; // Vertical column connection line
+                    let idx2 = i * cols + ((j + 1) % cols);
+                    let idx3 = ((i + 1) % rows) * cols + j;
+                    let p1 = points[idx1]; let p2 = points[idx2]; let p3 = points[idx3];
 
-                    let p1 = points[idx1];
-                    let p2 = points[idx2];
-                    let p3 = points[idx3];
-
-                    // Check distance to alter line tension color profile dynamically
                     let distToMouse = 999;
-                    if (mouse.x !== null) {
-                        distToMouse = Math.sqrt(Math.pow(p1.px - mouse.x, 2) + Math.pow(p1.py - mouse.y, 2));
-                    }
+                    if (mouse.x !== null) { distToMouse = Math.sqrt(Math.pow(p1.px - mouse.x, 2) + Math.pow(p1.py - mouse.y, 2)); }
 
-                    // Tighter/stretched paths shift color towards a sharp active cyan hue
-                    if (p1.baseZ > -40) { // Simple Z-depth clipping threshold
+                    if (p1.baseZ > -40) {
                         ctx.strokeStyle = distToMouse < 140 ? 'rgba(121, 192, 255, 0.45)' : 'rgba(56, 139, 253, 0.2)';
-                        
-                        ctx.beginPath();
-                        ctx.moveTo(p1.px, p1.py);
-                        ctx.lineTo(p2.px, p2.py);
-                        ctx.stroke();
-
-                        if (i < rows - 1) {
-                            ctx.beginPath();
-                            ctx.moveTo(p1.px, p1.py);
-                            ctx.lineTo(p3.px, p3.py);
-                            ctx.stroke();
-                        }
+                        ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+                        if (i < rows - 1) { ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p3.px, p3.py); ctx.stroke(); }
                     }
                 }
             }
-
             requestAnimationFrame(animate);
         }
-
-        initMesh();
-        animate();
+        initMesh(); animate();
     </script>
 </body>
 </html>
