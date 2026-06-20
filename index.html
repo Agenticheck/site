@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenticheck | Autonomous System Auditing & Secure Governance</title>
+    <style>
+        :root {
+            --accent-color: #58a6ff;
+            --text-color: #c9d1d9;
+            --card-bg: rgba(22, 27, 34, 0.85);
+            --border-color: rgba(48, 54, 61, 0.6);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: #0d1117 url('https://lh3.googleusercontent.com/d/1O1uCozhN-kM1Ym686uMv8bQ9566X4X9H') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .overlay {
+            background: linear-gradient(180deg, rgba(13, 17, 23, 0.7) 0%, rgba(13, 17, 23, 0.85) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+        h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        p.subtitle {
+            font-size: 1.35rem;
+            max-width: 750px;
+            margin: 0 auto 3rem auto;
+            color: #e1e4e8;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+        .cta-btn {
+            background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+            color: #fff;
+            padding: 0.85rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(46, 160, 67, 0.6);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 5rem;
+            text-align: left;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .card h3 {
+            color: #fff;
+            margin-top: 0;
+            font-size: 1.3rem;
+            letter-spacing: -0.3px;
+        }
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: #8b949e;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+        <header>
+            <div class="header-container">
+                <div class="logo">Agenticheck</div>
+            </div>
+        </header>
+
+        <div class="container">
+            <h1>SYSTEM AUDITING & SECURE GOVERNANCE</h1>
+            <p class="subtitle">Independent Verification for Autonomous AI Agents and Automated Infrastructures.</p>
+            
+            <a href="mailto:brandon@agenticheck.com" class="cta-btn">Request an Audit Consult</a>
+
+            <div class="features">
+                <div class="card">
+                    <h3>AI & Agentic Auditing</h3>
+                    <p>Comprehensive behavioral analysis and safety boundary verification for autonomous software systems and custom models.</p>
+                </div>
+                <div class="card">
+                    <h3>Technical Risk Mitigation</h3>
+                    <p>Identifying vulnerabilities in protocol logic, data handling, and automated operational pipelines before deployment.</p>
+                </div>
+                <div class="card">
+                    <h3>Compliance & Governance</h3>
+                    <p>Aligning third-party automated deployments with emerging security standards and enterprise governance requirements.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2026 Agenticheck. All rights reserved. | Est. 2026. Managed by Brandon Wiley.
+        </footer>
+    </div>
+
+</body>
+</html>
