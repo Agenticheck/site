@@ -3,155 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenticheck | Autonomous System Auditing & Secure Governance</title>
+    <title>Agenticheck | Autonomous Infrastructure Governance</title>
     <style>
         :root {
-            --accent-color: #58a6ff;
-            --text-color: #c9d1d9;
-            --card-bg: rgba(22, 27, 34, 0.85);
-            --border-color: rgba(48, 54, 61, 0.6);
+            --accent-glow: #388bfd;
+            --field-line: #58a6ff;
+            --text-main: #c9d1d9;
+            --bg-dark: #0d1117;
+            --card-surface: rgba(22, 27, 34, 0.85);
+            --border-muted: rgba(48, 54, 61, 0.8);
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background: #0d1117 url('https://lh3.googleusercontent.com/d/1O1uCozhN-kM1Ym686uMv8bQ9566X4X9H') no-repeat center center fixed;
-            background-size: cover;
-            color: var(--text-color);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
             line-height: 1.6;
         }
-        .overlay {
-            background: linear-gradient(180deg, rgba(13, 17, 23, 0.7) 0%, rgba(13, 17, 23, 0.85) 100%);
-            min-height: 100vh;
+
+        /* Hero Animation Container */
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: 65vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
-        header {
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.5rem 2rem;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.5px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
             text-align: center;
-            flex-grow: 1;
+            border-bottom: 1px solid var(--border-muted);
+            background: radial-gradient(circle at center, rgba(31, 111, 235, 0.1) 0%, transparent 70%);
         }
+
+        #fieldCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: all;
+        }
+
+        .intro-overlay {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
         h1 {
-            font-size: 3.5rem;
-            color: #fff;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-        p.subtitle {
-            font-size: 1.35rem;
-            max-width: 750px;
-            margin: 0 auto 3rem auto;
-            color: #e1e4e8;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        }
-        .cta-btn {
-            background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
             color: #fff;
-            padding: 0.85rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 6px;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 0 0 1rem 0;
+            letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(13, 17, 23, 0.8);
         }
-        .cta-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(46, 160, 67, 0.6);
+
+        p.tagline {
+            font-size: 1.25rem;
+            color: #8b949e;
+            margin: 0;
+            font-weight: 400;
+            text-shadow: 0 0 10px rgba(13, 17, 23, 0.8);
         }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 5rem;
-            text-align: left;
+
+        /* Main Operations Area */
+        .main-content {
+            max-width: 800px;
+            margin: -4rem auto 4rem auto;
+            position: relative;
+            z-index: 3;
+            padding: 0 1.5rem;
         }
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+        .terminal-card {
+            background: var(--card-surface);
+            border: 1px solid var(--border-muted);
+            border-radius: 12px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
-        .card h3 {
+
+        h2 {
+            font-size: 1.5rem;
             color: #fff;
             margin-top: 0;
-            font-size: 1.3rem;
-            letter-spacing: -0.3px;
+            margin-bottom: 0.5rem;
         }
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 2rem;
-            font-size: 0.9rem;
+
+        p.instructions {
             color: #8b949e;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            background-color: #070a0e;
+            border: 1px solid var(--border-muted);
+            border-radius: 6px;
+            color: #79c0ff;
+            padding: 1rem;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            resize: vertical;
+            margin-bottom: 1.5rem;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.25);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; gap: 1rem; }
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #070a0e;
+            border: 1px solid var(--border-muted);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-glow);
+        }
+
+        .scan-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #1f6feb 0%, #388bfd 100%);
+            color: #fff;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(31, 111, 235, 0.3);
+            transition: filter 0.2s, transform 0.1s;
+        }
+
+        .scan-btn:hover { filter: brightness(1.1); }
+        .scan-btn:active { transform: scale(0.99); }
+
+        footer {
             text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            color: #8b949e;
+            border-top: 1px solid rgba(48, 54, 61, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <div class="overlay">
-        <header>
-            <div class="header-container">
-                <div class="logo">Agenticheck</div>
-            </div>
-        </header>
-
-        <div class="container">
-            <h1>SYSTEM AUDITING & SECURE GOVERNANCE</h1>
-            <p class="subtitle">Independent Verification for Autonomous AI Agents and Automated Infrastructures.</p>
-            
-            <a href="mailto:brandon@agenticheck.com" class="cta-btn">Request an Audit Consult</a>
-
-            <div class="features">
-                <div class="card">
-                    <h3>AI & Agentic Auditing</h3>
-                    <p>Comprehensive behavioral analysis and safety boundary verification for autonomous software systems and custom models.</p>
-                </div>
-                <div class="card">
-                    <h3>Technical Risk Mitigation</h3>
-                    <p>Identifying vulnerabilities in protocol logic, data handling, and automated operational pipelines before deployment.</p>
-                </div>
-                <div class="card">
-                    <h3>Compliance & Governance</h3>
-                    <p>Aligning third-party automated deployments with emerging security standards and enterprise governance requirements.</p>
-                </div>
-            </div>
+    <div class="hero-container">
+        <canvas id="fieldCanvas"></canvas>
+        <div class="intro-overlay">
+            <h1>Agenticheck</h1>
+            <p class="tagline">Deterministic Vulnerability & Resource Auditing for Autonomous Frameworks</p>
         </div>
-
-        <footer>
-            &copy; 2026 Agenticheck. All rights reserved. | Est. 2026. Managed by Brandon Wiley.
-        </footer>
     </div>
 
+    <div class="main-content">
+        <div class="terminal-card">
+            <h2>Diagnostic System Audit</h2>
+            <p class="instructions">Paste environment logs, prompt routing rules, configuration profiles, or budget parameters to test for looping limits and systemic logic exploits.</p>
+            
+            <form action="mailto:brandon@agenticheck.com" method="post" enctype="text/plain">
+                <label for="systemData">Target Text/Configuration Dump</label>
+                <textarea id="systemData" name="System Configuration/Logs" placeholder="Paste runtime files here (e.g., system prompts, deployment YAML configs, or runtime infrastructure loops...)" required></textarea>
+
+                <div class="form-row">
+                    <div>
+                        <label for="comp">Company Name</label>
+                        <input type="text" id="comp" name="Company" placeholder="e.g., Enterprise Core Engineering" required>
+                    </div>
+                    <div>
+                        <label for="email">Corporate Email Address</label>
+                        <input type="email" id="email" name="Email" placeholder="admin@company.com" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="scan-btn">Initialize Vulnerability Verification</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Agenticheck. All rights reserved. | Securing Infrastructure Boundaries.
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('fieldCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initMesh();
+        });
+
+        const mouse = { x: null, y: null, targetX: null, targetY: null };
+        
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.targetX = e.clientX - rect.left;
+            mouse.targetY = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouse.targetX = null;
+            mouse.targetY = null;
+        });
+
+        let points = [];
+        const sphereRadius = 140;
+        const rows = 14;
+        const cols = 26;
+
+        function initMesh() {
+            points = [];
+            for (let i = 0; i < rows; i++) {
+                let theta = (i / (rows - 1)) * Math.PI;
+                for (let j = 0; j < cols; j++) {
+                    let phi = (j / cols) * 2 * Math.PI;
+                    
+                    // Generate baseline spherical topology coordinates
+                    let x = sphereRadius * Math.sin(theta) * Math.cos(phi);
+                    let y = sphereRadius * Math.sin(theta) * Math.sin(phi);
+                    let z = sphereRadius * Math.cos(theta);
+
+                    points.push({
+                        baseX: x, baseY: y, baseZ: z,
+                        x: x, y: y, z: z,
+                        px: 0, py: 0
+                    });
+                }
+            }
+        }
+
+        let angleX = 0.003;
+        let angleY = 0.005;
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Smoothly ease mouse coordinates
+            if (mouse.targetX !== null) {
+                if (mouse.x === null) { mouse.x = mouse.targetX; mouse.y = mouse.targetY; }
+                mouse.x += (mouse.targetX - mouse.x) * 0.1;
+                mouse.y += (mouse.targetY - mouse.y) * 0.1;
+            } else {
+                mouse.x = null; mouse.y = null;
+            }
+
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            // Rotate sphere geometry baseline coordinates
+            const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+            const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+
+            points.forEach(p => {
+                // Rotate Y
+                let x1 = p.baseX * cosY - p.baseZ * sinY;
+                let z1 = p.baseX * sinY + p.baseZ * cosY;
+                // Rotate X
+                let y2 = p.baseY * cosX - z1 * sinX;
+                let z2 = p.baseY * sinX + z1 * cosX;
+
+                p.baseX = x1; p.baseY = y2; p.baseZ = z2;
+
+                // Absolute screen position calculation
+                let screenX = p.baseX + centerX;
+                let screenY = p.baseY + centerY;
+
+                // Non-Euclidean Elastic force calculation
+                if (mouse.x !== null) {
+                    let dx = screenX - mouse.x;
+                    let dy = screenY - mouse.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 220) {
+                        // Elastic expansion force modifier mimicking pressure deformation
+                        let force = (220 - dist) / 220;
+                        let push = force * 45; 
+                        screenX += (dx / dist) * push;
+                        screenY += (dy / dist) * push;
+                    }
+                }
+
+                p.px = screenX;
+                p.py = screenY;
+            });
+
+            // Draw structural mesh connections
+            ctx.lineWidth = 0.75;
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    let idx1 = i * cols + j;
+                    let idx2 = i * cols + ((j + 1) % cols); // Horizontal row connection loop
+                    let idx3 = ((i + 1) % rows) * cols + j; // Vertical column connection line
+
+                    let p1 = points[idx1];
+                    let p2 = points[idx2];
+                    let p3 = points[idx3];
+
+                    // Check distance to alter line tension color profile dynamically
+                    let distToMouse = 999;
+                    if (mouse.x !== null) {
+                        distToMouse = Math.sqrt(Math.pow(p1.px - mouse.x, 2) + Math.pow(p1.py - mouse.y, 2));
+                    }
+
+                    // Tighter/stretched paths shift color towards a sharp active cyan hue
+                    if (p1.baseZ > -40) { // Simple Z-depth clipping threshold
+                        ctx.strokeStyle = distToMouse < 140 ? 'rgba(121, 192, 255, 0.45)' : 'rgba(56, 139, 253, 0.2)';
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(p1.px, p1.py);
+                        ctx.lineTo(p2.px, p2.py);
+                        ctx.stroke();
+
+                        if (i < rows - 1) {
+                            ctx.beginPath();
+                            ctx.moveTo(p1.px, p1.py);
+                            ctx.lineTo(p3.px, p3.py);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        initMesh();
+        animate();
+    </script>
 </body>
 </html>
